@@ -4,21 +4,23 @@ import { NativeRouter } from 'react-router-native';
 import { ApolloProvider } from '@apollo/client/react';
 
 import Main from './src/components/Main';
-
 import createApolloClient from './src/utils/apolloClient';
+import AuthStorage from './src/utils/authStorage';
+import AuthStorageContext from './src/contexts/AuthStorageContext';
 
-const client = createApolloClient();
+const authStorage = new AuthStorage();
+const apolloClient = createApolloClient(authStorage);
 
 
 export default function App() {
   return (
-    <>
-    <ApolloProvider client={client}>
-      <NativeRouter>
-        <Main />
+    <AuthStorageContext.Provider value={authStorage}>
+      <ApolloProvider client={apolloClient}>
+        <NativeRouter>
+          <Main />
           <StatusBar style="auto" />
-      </NativeRouter>
-     </ApolloProvider>
-    </>
+        </NativeRouter>
+      </ApolloProvider>
+    </AuthStorageContext.Provider>
   );
 }
