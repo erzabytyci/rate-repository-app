@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import useSignIn from '../hooks/useSignIn';
+
 
 import Text from './Text';
 import theme from '../theme';
@@ -73,8 +75,17 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log(values);
+  const [signIn] = useSignIn();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log('AUTH RESULT:', data);
+    } catch (e) {
+      console.log('SIGN IN ERROR:', e);
+    }
   };
 
   return <SignInForm onSubmit={onSubmit} />;
