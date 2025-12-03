@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, Pressable, Linking} from 'react-native';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
   statsRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginTop: 10,
   },
   statItem: {
     alignItems: 'center',
@@ -48,8 +50,20 @@ const styles = StyleSheet.create({
   statValue: {
     fontWeight: 'bold',
     fontSize: 16,
+  }, 
+  githubButton: {
+    marginTop: 15,
+    backgroundColor: theme.colors.primary, 
+    borderRadius: 4,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  githubButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
+
 
 const formatCount = (value) => {
   if (value < 1000) return String(value);
@@ -73,7 +87,7 @@ const RepositoryItem = ({ repository, showGitHubButton = false }) => {
       Linking.openURL(repository.url);
     }
   };
-  
+
   return (
     <View testID="repositoryItem" style={styles.container}>
       <View style={styles.topRow}>
