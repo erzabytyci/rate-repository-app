@@ -41,12 +41,13 @@
     "react-test-renderer": "^18.2.0"
   },
   "jest": {
-  "preset": "jest-expo",
-  "transform": {
-    "^.+\\.[jt]sx?$": "babel-jest"
+    "preset": "jest-expo",
+    "transform": {
+      "^.+\\.[jt]sx?$": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
+    ]
   },
-  "setupFilesAfterEnv": ["<rootDir>/setupTests.js"]
-}
-,
   "private": true
 }

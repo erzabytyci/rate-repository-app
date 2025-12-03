@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable, Linking} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +63,17 @@ const Stat = ({ label, value }) => (
   </View>
 );
 
-const RepositoryItem = ({ repository }) => {
+const RepositoryItem = ({ repository, showGitHubButton = false }) => {
+   if (!repository) {
+    return null;
+  }
+
+  const handleOpenGitHub = () => {
+    if (repository.url) {
+      Linking.openURL(repository.url);
+    }
+  };
+  
   return (
     <View testID="repositoryItem" style={styles.container}>
       <View style={styles.topRow}>
@@ -86,6 +96,12 @@ const RepositoryItem = ({ repository }) => {
         <Stat label="Reviews" value={repository.reviewCount} />
         <Stat label="Rating" value={repository.ratingAverage} />
       </View>
+
+       {showGitHubButton && (
+        <Pressable style={styles.githubButton} onPress={handleOpenGitHub}>
+          <Text style={styles.githubButtonText}>Open in GitHub</Text>
+        </Pressable>
+      )}
     </View>
   );
 };
