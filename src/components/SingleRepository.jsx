@@ -82,7 +82,15 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const SingleRepository = () => {
   const { id } = useParams(); 
-  const { repository, loading, error } = useRepository(id);
+  const first = 2;
+
+  const { repository, loading, error, fetchMore } = useRepository(id, first);
+
+  const onEndReach = () => {
+    if (fetchMore) {
+      fetchMore();
+    }
+  };
 
   if (loading) {
     return (
@@ -120,6 +128,8 @@ const SingleRepository = () => {
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
